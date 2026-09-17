@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: sportshoe-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: sportshoe
+      POSTGRES_USER: sportshoe
+      POSTGRES_PASSWORD: sportshoe
+    ports:
+      - "5432:5432"
+    volumes:
+      - sportshoe-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sportshoe -d sportshoe"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  sportshoe-postgres-data:
