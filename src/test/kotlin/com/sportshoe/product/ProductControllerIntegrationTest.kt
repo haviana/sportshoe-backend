@@ -10,20 +10,28 @@ import com.sportshoe.testsupport.AbstractIntegrationTest
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.boot.resttestclient.TestRestTemplate
 import org.springframework.http.HttpStatus
 import java.math.BigDecimal
 import java.time.Instant
 import java.util.UUID
 
 class ProductControllerIntegrationTest(
-	@Autowired private val restTemplate: TestRestTemplate,
-	@Autowired private val categoryRepository: CategoryRepository,
-	@Autowired private val productRepository: ProductRepository,
-	@Autowired private val offerRepository: OfferRepository,
 ) : AbstractIntegrationTest() {
+    @Autowired
+    lateinit var restTemplate: TestRestTemplate
 
-	private fun uniqueCode(prefix: String) = "$prefix-${UUID.randomUUID().toString().take(8)}"
+    @Autowired
+    lateinit var categoryRepository: CategoryRepository
+
+    @Autowired
+    lateinit var productRepository: ProductRepository
+
+    @Autowired
+    lateinit var offerRepository: OfferRepository
+
+
+    private fun uniqueCode(prefix: String) = "$prefix-${UUID.randomUUID().toString().take(8)}"
 
 	private fun seedProductWithOffer(): Pair<Product, Offer> {
 		val category = categoryRepository.save(

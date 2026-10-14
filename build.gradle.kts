@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "3.3.4"
+	id("org.springframework.boot") version "4.1.1"
 	id("io.spring.dependency-management") version "1.1.6"
-	kotlin("jvm") version "1.9.25"
-	kotlin("plugin.spring") version "1.9.25"
-	kotlin("plugin.jpa") version "1.9.25"
+	kotlin("jvm") version "2.3.0"
+	kotlin("plugin.spring") version "2.3.0"
+	kotlin("plugin.jpa") version "2.3.0"
 }
 
 group = "com.sportshoe"
@@ -21,28 +21,32 @@ repositories {
 	mavenCentral()
 }
 
-extra["testcontainersVersion"] = "1.20.1"
+extra["testcontainersVersion"] = "2.0.5"
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.0")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
-	implementation("org.flywaydb:flyway-core")
-	implementation("org.flywaydb:flyway-database-postgresql")
+	implementation("org.springframework.boot:spring-boot-starter-flyway")
+
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
 	runtimeOnly("org.postgresql:postgresql")
+	runtimeOnly("org.flywaydb:flyway-database-postgresql")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-	testImplementation("org.junit.jupiter:junit-jupiter")
-	testImplementation("org.testcontainers:junit-jupiter")
-	testImplementation("org.testcontainers:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-testcontainers")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	testImplementation("org.testcontainers:testcontainers-junit-jupiter:2.0.5")
+	testImplementation("org.testcontainers:testcontainers-postgresql:2.0.5")
+	testImplementation("org.springframework.boot:spring-boot-resttestclient")
+	testImplementation("org.springframework.boot:spring-boot-restclient")
+	testImplementation("org.springframework.boot:spring-boot-test-autoconfigure")
 }
 
 dependencyManagement {
